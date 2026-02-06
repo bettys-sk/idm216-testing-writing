@@ -230,7 +230,15 @@ p {
 }
 
 .past-orders-scroll::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
+  display: none;
+}
+
+.past-orders-link {
+    display: flex;
+    flex: 1 0 0;
+}
+.past-orders-link .food-card {
+    width: 100%;
 }
 /* PAST ORDERS */
 
@@ -318,6 +326,15 @@ hr {
 }
 /* FOOD CONTAINER */
 
+
+/* Grid layout for filtered category */
+.food-card-scroll.grid-view {
+  display: grid !important; /* override flex */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  overflow-x: hidden; /* remove horizontal scroll */
+}
+
 .arrow-left {
     width: 32px;
     height: 32px;
@@ -337,17 +354,116 @@ gap: 16px;
 align-self: stretch;
 }
 
+/* CUSTOMIZATION DROPDOWM */
 .customization-dropdown {
-    display: flex;
-    padding: 16px;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    align-self: stretch;
-    border-radius: 8px;
-    border: 1px solid var(--color-dark-primary);
-    margin-bottom: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid var(--color-dark-primary);
+  margin-bottom: var(--space-2);
+  overflow: hidden;
 }
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  cursor: pointer;
+  background: var(--color-background);
+}
+
+.dropdown-menu {
+  display: none;
+  background: var(--color-background);
+  gap: 8px;
+  padding: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.dropdown-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #45371F;
+  cursor: pointer;
+  padding: 12px;
+}
+
+.dropdown-img {
+    width: 64px;
+    height: 64px;
+    aspect-ratio: 1/1;
+}
+
+.customization-dropdown.active .dropdown-menu {
+  display: grid;
+}
+
+.arrow {
+  transition: transform 0.3s ease;
+}
+
+.customization-dropdown.active .arrow {
+  transform: rotate(180deg);
+}
+/* CUSTOMIZATION DROPDOWM */
+
+/* SCHEDULE DROPDOWM */
+.schedule-dropdown {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  border: 1px solid #FCC5BE;
+  margin-bottom: var(--space-2);
+  overflow: hidden;
+}
+
+.schedule-dropdown .dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  cursor: pointer;
+  background: var(--color-background);
+}
+
+.schedule-dropdown .dropdown-menu {
+  display: none;
+  flex-direction: column;
+  background: var(--color-background);
+  padding: 0;
+  gap: 0;
+}
+
+.schedule-dropdown .dropdown-item {
+  display: block;
+  padding: 12px 16px;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.schedule-dropdown .dropdown-item:hover {
+  background: var(--color-light-primary);
+}
+
+.schedule-dropdown.active .dropdown-menu {
+  display: flex;
+}
+
+.schedule-dropdown .arrow {
+  transition: transform 0.3s ease;
+}
+
+.schedule-dropdown.active .arrow {
+  transform: rotate(180deg);
+}
+/* SCHEDULE DROPDOWM */
 
 .quantity {
     display: flex;

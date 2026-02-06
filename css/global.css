@@ -235,8 +235,8 @@ p {
 
 .past-orders-link {
     display: flex;
-    flex: 1 0 0;
 }
+
 .past-orders-link .food-card {
     width: 100%;
 }
@@ -324,16 +324,18 @@ hr {
 .food-card-scroll::-webkit-scrollbar {
   display: none;
 }
-/* FOOD CONTAINER */
-
-
-/* Grid layout for filtered category */
 .food-card-scroll.grid-view {
-  display: grid !important; /* override flex */
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  overflow-x: hidden; /* remove horizontal scroll */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
 }
+
+.food-card-scroll.grid-view .food-card {
+    min-width: 0;
+    max-width: 100%;
+    flex: unset;
+}
+/* FOOD CONTAINER */
 
 .arrow-left {
     width: 32px;

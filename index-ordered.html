@@ -75,18 +75,18 @@
     <hr class="mb-4">
 
     <div class="filter-bar mb-6">
-        <button class="filter-item active">All</button>
-        <button class="filter-item">Breakfast Platters</button>
-        <button class="filter-item">Breakfast Sandwiches</button>
-        <button class="filter-item">Lunch Sandwiches</button>
-        <button class="filter-item">Chicken/Beef Steaks</button>
-        <button class="filter-item">Salads</button>
-        <button class="filter-item">Sides</button>
-        <button class="filter-item">Drinks</button>
+        <button class="filter-item active" data-filter="All">All</button>
+        <button class="filter-item" data-filter="Breakfast Platters">Breakfast Platters</button>
+        <button class="filter-item" data-filter="Breakfast Sandwiches">Breakfast Sandwiches</button>
+        <button class="filter-item" data-filter="Lunch Sandwiches">Lunch Sandwiches</button>
+        <button class="filter-item" data-filter="Chicken/Beef Steaks">Chicken/Beef Steaks</button>
+        <button class="filter-item" data-filter="Salads">Salads</button>
+        <button class="filter-item" data-filter="Sides">Sides</button>
+        <button class="filter-item" data-filter="Drinks">Drinks</button>
     </div>
 
-    <h2 class="mb-4">Breakfast Sandwiches</h2>
-    <div class="food-card-scroll mb-6">
+    <h2 class="mb-4" data-category="Breakfast Sandwiches">Breakfast Sandwiches</h2>
+    <div class="food-card-scroll mb-6" data-category="Breakfast Sandwiches">
     <a href="./food-item.html" class="past-orders-link">
         <div class="food-card">
             <img class="food-img" src="./img/food/egg-and-cheese-bagel.jpg" alt="egg-and-cheese">
@@ -116,8 +116,8 @@
         </div>
     </div>
 
-    <h2 class="mb-4">Breakfast Platters</h2>
-    <div class="food-card-scroll mb-6">
+    <h2 class="mb-4" data-category="Breakfast Platters">Breakfast Platters</h2>
+    <div class="food-card-scroll mb-6" data-category="Breakfast Platters">
         <div class="food-card">
             <img class="food-img" src="./img/food/egg-and-cheese.jpg" alt="egg and cheese platter">
             <p>Egg and Cheese Platter</p>
@@ -135,8 +135,8 @@
         </div>
     </div>
 
-    <h2 class="mb-4">Lunch Sandwiches</h2>
-    <div class="food-card-scroll mb-6">
+    <h2 class="mb-4" data-category="Lunch Sandwiches">Lunch Sandwiches</h2>
+    <div class="food-card-scroll mb-6" data-category="Lunch Sandwiches">
         <div class="food-card">
             <img class="food-img" src="./img/food/hotdog.jpg" alt="hotdog">
             <p>Hot Dog</p>
@@ -189,8 +189,8 @@
         </div>
     </div>
 
-    <h2 class="mb-4">Chicken/Beef Steaks</h2>
-    <div class="food-card-scroll mb-6">
+    <h2 class="mb-4" data-category="Chicken/Beef Steaks">Chicken/Beef Steaks</h2>
+    <div class="food-card-scroll mb-6" data-category="Chicken/Beef Steaks">
         <div class="food-card">
             <img class="food-img" src="./img/food/buffalo-chicken-cheesesteak.jpg" alt="Buffalo Cheese Steak">
             <p>Buffalo Cheese Steak</p>
@@ -223,8 +223,8 @@
         </div>
     </div>
 
-    <h2 class="mb-4">Salads</h2>
-    <div class="food-card-scroll mb-6">
+    <h2 class="mb-4" data-category="Salads">Salads</h2>
+    <div class="food-card-scroll mb-6" data-category="Salads">
         <div class="food-card">
             <img class="food-img" src="./img/food/garden-salad.jpg" alt="Garden Salad">
             <p>Garden Salad</p>
@@ -252,8 +252,8 @@
         </div>       
     </div>
 
-    <h2 class="mb-4">Sides</h2>
-    <div class="food-card-scroll mb-6">
+    <h2 class="mb-4" data-category="Sides">Sides</h2>
+    <div class="food-card-scroll mb-6" data-category="Sides">
         <div class="food-card">
             <img class="food-img" src="./img/food/chocolate-muffin.jpg" alt="Muffin">
             <p>Muffin</p>
@@ -296,8 +296,8 @@
         </div>
     </div>
 
-    <h2 class="mb-4">Drinks</h2>
-    <div class="food-card-scroll mb-10">
+    <h2 class="mb-4" data-category="Drinks">Drinks</h2>
+    <div class="food-card-scroll mb-10" data-category="Drinks">
         <div class="food-card">
             <img class="food-img" src="./img/food/hot-coffee.jpg" alt="Hot Coffe">
             <p>Hot Coffe</p>
@@ -311,11 +311,6 @@
         <div class="food-card">
             <img class="food-img" src="./img/food/hot-chocolate.jpg" alt="Hot Chocolate">
             <p>Hot Chocolate</p>
-            <p>$1.00</p>
-        </div>
-        <div class="food-card">
-            <img class="food-img" src="./img/food/egg.jpg" alt="">
-            <p></p>
             <p>$1.00</p>
         </div>
         <div class="food-card">
@@ -398,3 +393,69 @@
     </div>
 </body>
 </html>
+
+<script>
+const filterButtons = document.querySelectorAll('.filter-item');
+const headings = document.querySelectorAll('h2[data-category]');
+
+// Store original margin classes for each food-card-scroll
+const originalMargins = {};
+headings.forEach(heading => {
+    const nextScroll = getNextFoodCardScroll(heading);
+    if (nextScroll) {
+        originalMargins[heading.dataset.category] = nextScroll.className.match(/mb-\d+/)?.[0] || '';
+    }
+});
+
+function getNextFoodCardScroll(el) {
+    let next = el.nextElementSibling;
+    while (next && !next.classList.contains('food-card-scroll')) {
+        next = next.nextElementSibling;
+    }
+    return next;
+}
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filter = button.dataset.filter;
+
+        headings.forEach(heading => {
+            const nextScroll = getNextFoodCardScroll(heading);
+
+            // Hide everything and reset classes
+            heading.style.display = 'none';
+            if (nextScroll) {
+                nextScroll.style.display = 'none';
+                nextScroll.classList.remove('grid-view');
+                nextScroll.classList.remove('mb-10');
+                // Restore original margin for All state
+                nextScroll.classList.remove(...nextScroll.className.split(' ').filter(c => c.startsWith('mb-')));
+                nextScroll.classList.add(originalMargins[heading.dataset.category]);
+            }
+
+            // Show selected category
+            if (filter === 'All' || heading.dataset.category === filter) {
+                heading.style.display = 'block';
+                if (nextScroll) {
+                    if (filter === 'All') {
+                        // ALL state: scrollable, original spacing
+                        nextScroll.style.display = 'flex';
+                        nextScroll.classList.remove('grid-view');
+                        // Restore original margin
+                        nextScroll.classList.remove(...nextScroll.className.split(' ').filter(c => c.startsWith('mb-')));
+                        nextScroll.classList.add(originalMargins[heading.dataset.category]);
+                    } else {
+                        // Filtered state: 2-per-row grid, mb-10 spacing
+                        nextScroll.style.display = 'grid';
+                        nextScroll.classList.add('grid-view');
+                        nextScroll.classList.add('mb-10');
+                    }
+                }
+            }
+        });
+    });
+});
+</script>

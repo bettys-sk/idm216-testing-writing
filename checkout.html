@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./css/global.css">
 </head>
 <body>
+<div class="iphone-container">
 
     <a href="./food-item.html">
         <img class="arrow-left mb-5" src="./img/arrow-left.png" alt="left arrow">
@@ -14,7 +15,7 @@
 
     <h2 class="mb-4">Select Payment Method</h2>
 
-    <div class="payment-method mb-2">
+    <div class="payment-method mb-2" data-method="card">
         <div class="payment-left">
             <img class="payment-img" src="./img/debit.png" alt="debit card image">
             <p>Debit/Credit Card</p>
@@ -22,7 +23,7 @@
         <img class="icon" src="./img/checkbox.png" alt="checkbox icon">
     </div>
 
-    <div class="payment-method mb-2">
+    <div class="payment-method mb-2" data-method="card">
         <div class="payment-left">
             <img class="payment-img" src="./img/apple.png" alt="apple pay image">
             <p>Apple Pay</p>
@@ -30,7 +31,7 @@
         <img class="icon" src="./img/checkbox.png" alt="checkbox icon">
     </div>
 
-    <div class="payment-method mb-2">
+    <div class="payment-method mb-2" data-method="card">
         <div class="payment-left">
             <img class="payment-img" src="./img/paypal.png" alt="paypal image">
             <p>Paypal</p>
@@ -38,7 +39,7 @@
         <img class="icon" src="./img/checkbox.png" alt="checkbox icon">
     </div>
 
-    <div class="payment-method mb-5">
+    <div class="payment-method mb-5" data-method="card">
         <div class="payment-left">
             <img class="payment-img" src="./img/venmo.png" alt="venmo image">
             <p>Venmo</p>
@@ -97,8 +98,8 @@
         </div>
 
         <div class="tip">
-            <h4>Custom</h4>
-            <h4>Tip</h4>
+            <h4>25%</h4>
+            <p>$2.10</p>
         </div>
     </div>
 
@@ -134,5 +135,69 @@
             <h4>Place Order</h4>
         </div>    
     </a>
+</div>
 </body>
 </html>
+
+<script>
+  const paymentMethods = document.querySelectorAll('.payment-method');
+
+  paymentMethods.forEach(method => {
+    method.addEventListener('click', () => {
+
+      // Reset all to unchecked
+      paymentMethods.forEach(item => {
+        const icon = item.querySelector('.icon');
+        icon.src = './img/checkbox.png';
+      });
+
+      // Set clicked one to checked
+      const selectedIcon = method.querySelector('.icon');
+      selectedIcon.src = './img/checkbox-filled.png';
+    });
+  });
+
+    const rewards = document.querySelectorAll('.rewards-checkout');
+
+  rewards.forEach(reward => {
+    reward.addEventListener('click', () => {
+
+      // Reset all rewards first
+      rewards.forEach(item => {
+        item.style.backgroundColor = '';
+        item.style.opacity = '0.5';
+
+        const box = item.querySelector('.apply-reward-text-box');
+        box.style.backgroundColor = '';
+        
+        const text = box.querySelector('p');
+        text.textContent = 'Apply Reward';
+      });
+
+      // Activate selected reward
+      reward.style.backgroundColor = '#FFF1EF';
+      reward.style.opacity = '1';
+
+      const selectedBox = reward.querySelector('.apply-reward-text-box');
+      selectedBox.style.backgroundColor = '#FCC5BE';
+
+      const selectedText = selectedBox.querySelector('p');
+      selectedText.textContent = 'Applied!';
+    });
+  });
+
+    const tips = document.querySelectorAll('.tip');
+
+  tips.forEach(tip => {
+    tip.addEventListener('click', () => {
+
+      // Reset all tips
+      tips.forEach(item => {
+        item.style.backgroundColor = '';
+      });
+
+      // Activate selected tip
+      tip.style.backgroundColor = '#FFF1EF';
+    });
+  });
+</script>

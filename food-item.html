@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="./css/global.css">
 </head>
 <body>
-<div class="modal-overlay" onclick="closeModal()"></div>
+<div class="iphone-container">
+    <div class="modal-overlay" onclick="closeModal()"></div>
 
-<div class="bottom-modal">
+    <div class="bottom-modal">
 
     <!-- Handle (non-scrolling) -->
     <div class="modal-handle"></div>
@@ -54,16 +55,26 @@
 
                     <div class="order-edit-right">
                         <h4 class="order-price">$5.00</h4>
-                        <img class="icon" src="./img/trash-can.png" alt="trash can icon">
+
+                        <button class="icon-btn delete-btn">
+                            <img class="icon" src="./img/trash-can.png" alt="Remove item">
+                        </button>
                     </div>
                 </div>
 
                 <div class="order-edit-bottom">
                     <img class="edit-icon" src="./img/edit.png" alt="edit icon">
+
                     <div class="quantity-option">
-                        <img class="icon" src="./img/minus.png" alt="minus icon">
-                        <h4>1</h4>
-                        <img class="icon" src="./img/plus-fill.png" alt="plus icon">
+                        <button class="icon-btn decrease-btn">
+                            <img class="icon" src="./img/minus.png" alt="Decrease quantity">
+                        </button>
+
+                        <h4 class="quantity-value">1</h4>
+
+                        <button class="icon-btn increase-btn">
+                            <img class="icon" src="./img/plus-fill.png" alt="Increase quantity">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -79,16 +90,26 @@
 
                     <div class="order-edit-right">
                         <h4 class="order-price">$2.00</h4>
-                        <img class="icon" src="./img/trash-can.png" alt="trash can icon">
+
+                        <button class="icon-btn delete-btn">
+                            <img class="icon" src="./img/trash-can.png" alt="Remove item">
+                        </button>
                     </div>
                 </div>
 
                 <div class="order-edit-bottom">
                     <img class="edit-icon" src="./img/edit.png" alt="edit icon">
+
                     <div class="quantity-option">
-                        <img class="icon" src="./img/minus.png" alt="minus icon">
-                        <h4>1</h4>
-                        <img class="icon" src="./img/plus-fill.png" alt="plus icon">
+                        <button class="icon-btn decrease-btn">
+                            <img class="icon" src="./img/minus.png" alt="Decrease quantity">
+                        </button>
+
+                        <h4 class="quantity-value">1</h4>
+
+                        <button class="icon-btn increase-btn">
+                            <img class="icon" src="./img/plus-fill.png" alt="Increase quantity">
+                        </button>
                     </div>
                 </div>
             </div>
@@ -132,15 +153,14 @@
             </div>
         </a>
     </div>
-    </div>
 </div>
 
-    <a href="index.html">
+<a href="index.html">
         <img class="arrow-left mb-5" src="./img/arrow-left.png" alt="left arrow">
     </a>
 
     <div item-des-page>
-        <img class="food-img mb-3" src="./img/food/egg-and-cheese.jpg" alt="egg-and-cheese">
+        <img class="food-img mb-3" src="./img/food/egg-and-cheese-bagel.jpg" alt="egg-and-cheese">
         <h2 class="mb-2">Egg & Cheese</h2>
         <p class="mb-2">Egg and cheese served on bread of your choice</p>
         <p class="mb-5">$4.00</p>
@@ -232,7 +252,7 @@
     <!-- MEAT CUSTOMIZATION -->
     <div class="customization-dropdown">
         <div class="dropdown-header">
-            <h4>* Meat [select up to two]</h4>
+            <h4>* Meat [select one]</h4>
             <img class="icon arrow" src="./img/arrow-down.png" alt="down arrow">
         </div>
     <div class="dropdown-menu">
@@ -337,9 +357,15 @@
     <div class="quantity">
         <h4>Quantity</h4>
         <div class="quantity-option">
-            <img class="icon" src="./img/minus.png" alt="minus icon">
-            <h4>1</h4>
-            <img class="icon" src="./img/plus-fill.png" alt="plus icon">
+            <button class="qty-btn" id="decrease">
+                <img class="icon" src="./img/minus.png" alt="Decrease quantity">
+            </button>
+
+            <h4 id="quantity-value">1</h4>
+
+            <button class="qty-btn" id="increase">
+                <img class="icon" src="./img/plus-fill.png" alt="Increase quantity">
+            </button>
         </div>
     </div>
 
@@ -351,50 +377,241 @@
     <div class="btn mt-5"  onclick="openModal()">
         <h4>Add to bag</h4>
     </div>    
+</div>
 </body>
 </html>
 
 <script>
 function openModal() {
     document.body.style.overflow = 'hidden';
-    document.querySelector('.bottom-modal').classList.add('active');
-    document.querySelector('.modal-overlay').classList.add('active');
+    
+    const modal = document.querySelector('.bottom-modal');
+    const overlay = document.querySelector('.modal-overlay');
+    const container = document.querySelector('.iphone-container');
+    
+    const containerRect = container.getBoundingClientRect();
+    const containerBottom = window.innerHeight - containerRect.bottom;
+    
+    modal.style.bottom = containerBottom + 'px';
+    modal.style.maxHeight = (containerRect.height - 64) + 'px';
+    
+    overlay.style.bottom = containerBottom + 'px';
+    overlay.style.top = containerRect.top + 'px';
+    overlay.style.height = containerRect.height + 'px';
 
-    // hide nav
-    document.querySelector('.nav').classList.add('hidden');
+    modal.style.display = 'flex';
+    overlay.style.display = 'block';
+
+    requestAnimationFrame(() => {
+        modal.classList.add('active');
+        overlay.classList.add('active');
+    });
 }
 
 function closeModal() {
     document.body.style.overflow = '';
-    document.querySelector('.bottom-modal').classList.remove('active');
-    document.querySelector('.modal-overlay').classList.remove('active');
 
-    // show nav
+    const modal = document.querySelector('.bottom-modal');
+    const overlay = document.querySelector('.modal-overlay');
+
+    modal.classList.remove('active');
+    overlay.classList.remove('active');
+
+    setTimeout(() => {
+        modal.style.display = 'none';
+        overlay.style.display = 'none';
+    }, 350);
+     
     document.querySelector('.nav').classList.remove('hidden');
 }
 
 document.querySelectorAll('.customization-dropdown').forEach(dropdown => {
   const header = dropdown.querySelector('.dropdown-header');
-  if (header) { // make sure header exists
+  if (header) {
     header.addEventListener('click', () => {
-      dropdown.classList.toggle('active'); // open/close menu
+      dropdown.classList.toggle('active');
     });
   }
 });
 
 document.querySelectorAll('.schedule-dropdown').forEach(dropdown => {
   const header = dropdown.querySelector('.dropdown-header');
+  const headerText = header.querySelector('h4');
+  
   header.addEventListener('click', () => {
     dropdown.classList.toggle('active'); // open/close menu
   });
+  
+  // Handle selection
+  dropdown.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      // Remove selected class from all items
+      dropdown.querySelectorAll('.dropdown-item').forEach(i => {
+        i.classList.remove('selected');
+        i.style.background = '';
+      });
+      
+      // Add selected class to clicked item
+      item.classList.add('selected');
+      item.style.background = '#FCC5BE';
+      
+      // Update header text and background
+      headerText.textContent = item.textContent;
+      header.style.background = '#FFF1EF';
+      
+      // Close menu after selection
+      dropdown.classList.remove('active');
+    });
+  });
 });
 
-// Optional: handle selection
-document.querySelectorAll('.schedule-dropdown .dropdown-item').forEach(item => {
-  item.addEventListener('click', () => {
-    const dropdown = item.closest('.schedule-dropdown');
-    dropdown.querySelector('.dropdown-header h4').textContent = item.textContent;
-    dropdown.classList.remove('active'); // close menu after selection
+  const decreaseBtn = document.getElementById('decrease');
+  const increaseBtn = document.getElementById('increase');
+  const quantityValue = document.getElementById('quantity-value');
+
+  let quantity = 1;
+
+  increaseBtn.addEventListener('click', () => {
+    quantity++;
+    quantityValue.textContent = quantity;
+  });
+
+  decreaseBtn.addEventListener('click', () => {
+    if (quantity > 1) {
+      quantity--;
+      quantityValue.textContent = quantity;
+    }
+  });
+
+  document.querySelectorAll('.order-edit-summary').forEach(orderItem => {
+
+  const increaseBtn = orderItem.querySelector('.increase-btn');
+  const decreaseBtn = orderItem.querySelector('.decrease-btn');
+  const quantityText = orderItem.querySelector('.quantity-value');
+  const deleteBtn = orderItem.querySelector('.delete-btn');
+
+  let quantity = parseInt(quantityText.textContent);
+
+  if (increaseBtn) {
+    increaseBtn.addEventListener('click', () => {
+      quantity++;
+      quantityText.textContent = quantity;
+    });
+  }
+
+  if (decreaseBtn) {
+    decreaseBtn.addEventListener('click', () => {
+      if (quantity > 1) {
+        quantity--;
+        quantityText.textContent = quantity;
+      }
+    });
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+      orderItem.remove();
+    });
+  }
+
+});
+
+// Handle customization dropdown selections
+document.querySelectorAll('.customization-dropdown').forEach(dropdown => {
+  const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+  const dropdownHeader = dropdown.querySelector('.dropdown-header');
+  
+  dropdownMenu.querySelectorAll('.dropdown-item').forEach(item => {
+    item.addEventListener('click', () => {
+      // Remove active class from all items in this dropdown
+      dropdownMenu.querySelectorAll('.dropdown-item').forEach(i => {
+        i.classList.remove('selected');
+        i.style.background = '';
+        i.style.border = '1px solid #45371F';
+      });
+      
+      // Add active class to clicked item
+      item.classList.add('selected');
+      item.style.background = '#FCC5BE';
+      item.style.border = '2px solid #45371F';
+      
+      // Get the image and text from selected item
+      const img = item.querySelector('.dropdown-img');
+      const text = item.querySelector('p');
+      
+      if (img && text) {
+        // Check if selection display already exists
+        let selectionDisplay = dropdown.querySelector('.selection-display');
+        
+        if (!selectionDisplay) {
+          // Create the selection display div
+          selectionDisplay = document.createElement('div');
+          selectionDisplay.className = 'selection-display';
+          selectionDisplay.style.cssText = `
+            display: flex;
+            gap: 8px;
+            padding: 12px 16px;
+            background: var(--color-background);
+            border-top: 1px solid var(--color-dark-primary);
+          `;
+          
+          // Insert it before the dropdown menu
+          dropdown.insertBefore(selectionDisplay, dropdownMenu);
+        }
+        
+        // Clear and populate selection display
+        selectionDisplay.innerHTML = `
+          <div style="
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            background: #FCC5BE;
+            border-radius: 8px;
+            border: 1px solid #45371F;
+          ">
+            <img src="${img.src}" alt="${text.textContent}" style="width: 48px; height: 48px;">
+            <button class="remove-selection" style="
+              position: absolute;
+              top: -8px;
+              right: -8px;
+              width: 24px;
+              height: 24px;
+              background: #FCC5BE;
+              border: 1px solid #45371F;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              padding: 0;
+            ">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path d="M1 1L11 11M1 11L11 1" stroke="#45371F" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center;">
+            <p style="font-weight: 700; margin: 0;">${text.textContent}</p>
+          </div>
+        `;
+        
+        // Add click handler to remove button
+        const removeBtn = selectionDisplay.querySelector('.remove-selection');
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          selectionDisplay.remove();
+          item.classList.remove('selected');
+          item.style.background = '';
+          item.style.border = '1px solid #45371F';
+        });
+      }
+      
+      // Close the dropdown after selection
+      dropdown.classList.remove('active');
+    });
   });
 });
 </script>

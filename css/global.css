@@ -27,6 +27,88 @@
   font-display: swap;
 }
 
+.iphone-container {
+    width: 430px;
+    height: 932px;
+    margin: 0 auto;
+    overflow-y: auto;
+    background-color: var(--color-background);
+    padding: 32px 16px 32px 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 24px;
+    position: relative;
+    font-size: 14px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;  
+}
+
+.iphone-container::-webkit-scrollbar {
+    display: none;
+}
+
+.iphone-container .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 430px;
+    margin: 0 auto;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    display: none;
+    border-radius: 24px;
+}
+
+.iphone-container .bottom-modal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 430px;
+    margin: 0 auto;
+    height: 90%;
+    max-height: calc(932px - 64px);
+    border-radius: 16px 16px 0 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+    padding: 16px;
+    z-index: 11;
+    display: none;
+    border-radius: 24px;
+}
+
+.iphone-container .modal-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 32px;
+}
+
+.iphone-container .modal-content::-webkit-scrollbar {
+    display: none;
+}
+
+.iphone-container .modal-handle {
+    width: 40px;
+    height: 4px;
+    background: #ccc;
+    border-radius: 999px;
+    margin: 0 auto 12px;
+}
+
+.iphone-container .modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* variables */
 :root {
   /* colors */
@@ -347,6 +429,16 @@ hr {
     height: 24px;
 }
 
+.icon-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .item-des-page {
     display: flex;
 height: 385px;
@@ -448,10 +540,7 @@ align-self: stretch;
   border: none;
   text-align: left;
   transition: background 0.2s;
-}
-
-.schedule-dropdown .dropdown-item:hover {
-  background: var(--color-light-primary);
+  border-radius: 0;
 }
 
 .schedule-dropdown.active .dropdown-menu {
@@ -653,11 +742,24 @@ align-self: stretch;
 }
 
 .center-text {
-    text-align: center; /* centers text inside the element */
+    text-align: center;
+}
+
+.content {
+    height: 100%;
+    overflow-y: auto;
+
+    /* hide scrollbar */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar {
+    display: none;
 }
 
 .nav {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -748,7 +850,6 @@ a {
 }
 
 .bottom-modal {
-    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -917,4 +1018,14 @@ a {
     padding: 16px;
     border-radius: 8px;
     border: 1px solid #FCC5BE;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

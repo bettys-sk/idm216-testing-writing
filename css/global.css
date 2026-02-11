@@ -601,6 +601,7 @@ align-self: stretch;
     border-radius: 8px;
     border: 1px solid var(--color-dark-primary);
     background: #F1513B;
+    cursor: pointer;
 }
 
 .payment-img {
@@ -615,6 +616,7 @@ align-self: stretch;
   padding: 12px;
   border: 1px solid var(--color-dark-primary);
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .payment-left {
@@ -630,6 +632,7 @@ align-self: stretch;
     padding: 16px;
     border-radius: 8px;
     border: 1px solid var(--color-dark-primary);
+    cursor: pointer;
 }
 
 .rewards-checkout-50 {
@@ -674,6 +677,7 @@ align-self: stretch;
     align-items: center;
     gap: 8px;
     align-self: stretch;
+    
 }
 
 .tip {
@@ -687,6 +691,7 @@ align-self: stretch;
     align-self: stretch;
     border-radius: 8px;
     border: 1px solid var(--color-dark-primary);
+    cursor: pointer;
 }
 
 .cost-breakdown {
